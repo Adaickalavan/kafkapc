@@ -1,16 +1,15 @@
 package kafkapc
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"os/signal"
-	"fmt"
 
 	"github.com/Shopify/sarama"
 )
 
 //CreateKafkaProducer creates asynchronous producers
-func CreateKafkaProducer(brokers []string) (sarama.AsyncProducer, error) {
+func CreateKafkaProducer(brokers []string, c chan os.Signal) (sarama.AsyncProducer, error) {
 	config := sarama.NewConfig()
 	config.Producer.RequiredAcks = sarama.WaitForAll
 	config.Producer.Compression = sarama.CompressionNone
@@ -21,10 +20,10 @@ func CreateKafkaProducer(brokers []string) (sarama.AsyncProducer, error) {
 		return nil, err
 	}
 
-	//Relay incoming signals to channel 'c'
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	signal.Notify(c, os.Kill)
+	// //Relay incoming signals to channel 'c'
+	// c := make(chan os.Signal, 1)
+	// signal.Notify(c, os.Interrupt)
+	// signal.Notify(c, os.Kill)
 
 	//Terminate the producer gracefully upon receiving a kill signal.
 	//This is a must to prevent memory leak.
