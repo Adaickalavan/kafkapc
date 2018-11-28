@@ -34,6 +34,7 @@ func CreateKafkaProducer(brokers []string) (sarama.AsyncProducer, error) {
 		}
 
 		log.Println("Async Producer closed.")
+		fmt.Println("hi jus jisu i j.")
 		os.Exit(1)
 	}()
 
