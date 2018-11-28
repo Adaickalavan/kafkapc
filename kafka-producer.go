@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"fmt"
 
 	"github.com/Shopify/sarama"
 )
