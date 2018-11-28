@@ -20,7 +20,6 @@ func CreateKafkaProducer(brokers []string) (sarama.AsyncProducer, error) {
 
 	//Relay incoming signals to channel 'c'
 	c := make(chan os.Signal, 1)
-	signal.Notify(c)
 	signal.Notify(c, os.Interrupt)
 	signal.Notify(c, os.Kill)
 
