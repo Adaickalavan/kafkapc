@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"time"
 
 	"github.com/Shopify/sarama"
 )
@@ -15,9 +14,9 @@ func CreateKafkaProducer(brokers []string) (sarama.AsyncProducer, error) {
 	config.Producer.RequiredAcks = sarama.WaitForAll
 	config.Producer.Compression = sarama.CompressionNone
 	config.Producer.MaxMessageBytes = 100000000 //100MB. Maximum permitted size of a message (defaults to 1MB). MaxMessageBytes <= broker's `message.max.bytes`.
-	config.Producer.Flush.Messages = 1          //Maximum number of messages the producer will send in a single broker request. Defaults to 0 for unlimited.
-	dur, _ := time.ParseDuration("0.5s")
-	config.Producer.Flush.Frequency = dur //The best-effort frequency of flushes. Equivalent to `queue.buffering.max.ms` setting of JVM producer.
+	// config.Producer.Flush.Messages = 10          //Maximum number of messages the producer will send in a single broker request. Defaults to 0 for unlimited.
+	// dur, _ := time.ParseDuration("0.05s")
+	// config.Producer.Flush.Frequency = dur //The best-effort frequency of flushes. Equivalent to `queue.buffering.max.ms` setting of JVM producer.
 	producer, err := sarama.NewAsyncProducer(brokers, config)
 	if err != nil {
 		return nil, err
